@@ -26,7 +26,7 @@ router.delete('/:id', deletePlanning);
 // router.get('/:id', getPlanning);
 
 //route to get all plannings
-router.get('/', getPlannings);
+router.get('/all', getPlannings);
 
 //route pour generer un planning
 router.post('/generate', generateSchedule);

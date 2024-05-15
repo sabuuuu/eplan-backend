@@ -2,12 +2,8 @@ import mongoose from "mongoose";
 
 const planningSchema = new mongoose.Schema({
     exams : [{
-            type : mongoose.Schema.Types.ObjectId,
-            ref : "Exams"
-    }],
-    date : [{
-        debut : String,
-        fin : String        
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Exams"
     }],
     faculte : {
         type : String,
@@ -22,11 +18,11 @@ const planningSchema = new mongoose.Schema({
         required : true
     },
     annee : {
-        type : Number,
+        type : String,
         required : true
     },
     semestre : {
-        type : Number,
+        type : String,
         required : true
     },
     type : {

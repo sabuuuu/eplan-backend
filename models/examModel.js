@@ -9,10 +9,10 @@ const examSchema = new mongoose.Schema({
         type : String,
         required : true
     },
-    time :[{
-        debut: String, // Heure de début (par exemple: "9:00")
-        fin: String // Heure de fin (par exemple: "12:00")
-    }],
+    time :{
+        type : String,
+        required : true
+    },
     profs :[{
         type : mongoose.Schema.Types.ObjectId,
         ref : "Prof"

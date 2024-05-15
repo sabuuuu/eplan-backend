@@ -12,6 +12,7 @@ import planningsRoutes from './routes/plannings.js';
 
 const app = express();
 app.use(express.json());
+//cors to allow frontend requests
 app.use(cors())
 
 app.get('/', (req, res) => {

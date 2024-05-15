@@ -1,11 +1,9 @@
 import express from 'express';
 import {Planning} from '../models/planningModel.js';
-import { Exam } from '../models/examModel.js';
-import { Prof } from '../models/profModel.js';
-import {Salle} from '../models/salleModel.js';
 import { requireAuth } from '../middleware/requireAuth.js';
 
-import axios from 'axios';
+import { ObjectId } from 'mongodb';
+
 const router = express.Router();
 
 router.use(requireAuth);
@@ -13,20 +11,17 @@ router.use(requireAuth);
 //route ajouter un planning
 export const addPlanning = async (req, res) => {
     try {
-        if (!req.body.exams || !req.body.date || !req.body.faculte || !req.body.departement || !req.body.filiere || !req.body.annee || !req.body.semestre || !req.body.type) {
+        if (!req.body.exams || !req.body.faculte || !req.body.departement || !req.body.filiere || !req.body.annee || !req.body.semestre || !req.body.type) {
             return res.status(400).json({ message: "Veillez remplir tous les champs" });
         }
-        const user_id = req.user._id;
         const newPlanning = {
             exams: req.body.exams,
-            date: req.body.date,
             faculte: req.body.faculte,
             departement: req.body.departement,
             filiere: req.body.filiere,
             annee: req.body.annee,
             semestre: req.body.semestre,
             type: req.body.type,
-            user_id
         }
         const planning = await Planning.create(newPlanning);
         res.status(201).send(planning);
@@ -114,7 +109,7 @@ export const generateSchedule = async (req, res) => {
         if (!examNames || !Array.isArray(examNames) || examNames.length === 0) {
             return res.status(400).json({ error: 'Invalid exam names provided' });
         }
-        const exams = examNames.map(name => ({ name, time: '', date: '' , profs: [], salle: ''}));
+        const exams = examNames.map(name => ({ _id: new ObjectId() ,name, time: '', date: '' , profs: [], salle: ''}));
 
         //Gerer les jour d'examinations en ignorant les jours Vendredi et Samedi avec les horaires
         let currentDate = new Date(); //Commencer par la date courante 

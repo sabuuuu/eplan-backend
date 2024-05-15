@@ -5,10 +5,9 @@ import {Prof} from '../models/profModel.js'
 //ajouter un prof
 export const addProf = async (req, res) => {
     try {
-        if (!req.body.matricule || !req.body.birthdate || !req.body.name || !req.body.surname) {
+        if (!req.body.matricule || !req.body.birthdate || !req.body.name || !req.body.surname || !req.body.grade || !req.body.email) {
             return res.status(400).json({message: "Veuillez remplir tous les champs"});
         }
-        const user_id = req.user._id;
         const newProf = {
             matricule: req.body.matricule,
             birthdate: req.body.birthdate,
@@ -16,7 +15,7 @@ export const addProf = async (req, res) => {
             surname: req.body.surname,
             grade: req.body.grade,
             dispo: req.body.dispo,
-            user_id
+            email: req.body.email
         }
 
         const prof = await Prof.create(newProf);
@@ -30,7 +29,7 @@ export const addProf = async (req, res) => {
 //modifier un prof
 export const updateProf = async (req, res) => {
     try {
-        if (!req.body.matricule || !req.body.birthdate || !req.body.name || !req.body.surname) {
+        if (!req.body.matricule || !req.body.birthdate || !req.body.name || !req.body.surname || !req.body.grade || !req.body.email) {
             return res.status(400).json({message: "Veuillez remplir tous les champs"});
         }
         const {id} = req.params;
@@ -41,6 +40,7 @@ export const updateProf = async (req, res) => {
             surname: req.body.surname,
             grade: req.body.grade,
             dispo: req.body.dispo
+            ,email: req.body.email
         };
         const prof = await Prof.findByIdAndUpdate(id, updatedFields);
         if (!prof) {

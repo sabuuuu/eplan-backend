@@ -27,6 +27,10 @@ const profSchema = new mongoose.Schema({
         debut: String,  
         fin: String  
     }],
+    email : {
+        type : String,
+        required : true
+    }
 })
 
 //static login method
