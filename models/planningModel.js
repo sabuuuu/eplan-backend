@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const planningSchema = new mongoose.Schema({
     exams : [{
         type : mongoose.Schema.Types.ObjectId,
-        ref : "Exams"
+        ref : "Exam"
     }],
     faculte : {
         type : String,

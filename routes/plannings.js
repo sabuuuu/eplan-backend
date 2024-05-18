@@ -3,7 +3,7 @@ import {
     addPlanning,
     updatePlanning,
     deletePlanning,
-    // getPlanning,
+    getPlanningFiltre,
     getPlannings,
     generateSchedule
 } from '../controllers/planningController.js';
@@ -30,6 +30,9 @@ router.get('/all', getPlannings);
 
 //route pour generer un planning
 router.post('/generate', generateSchedule);
+
+//route pour filtrer les plannings
+router.get('/filtre', getPlanningFiltre);
 
 
 export default router

@@ -27,28 +27,28 @@ userSchema.statics.signup = async function (email, password ,name, surname) {
 
     //validation
     if(!email ){
-        throw Error('Email is required')
+        throw Error('Veuillez saisir votre email 📝')
     }
     if(!password ){
-        throw Error('Password is required')
+        throw Error('Veuillez saisir votre mot de passe 📝')
     }
     if(!surname ){
-        throw Error('Surname is required')
+        throw Error('Veuillez saisir votre prénom 📝')
     }
     if(!name ){
-        throw Error('Name is required')
+        throw Error('Veuillez saisir votre nom 📝')
     }
 
     if(!validator.isEmail(email)){
-        throw Error('Email is not valid')
+        throw Error('Email invalide 📧')
     }
     if(!validator.isStrongPassword(password)){
-        throw Error('Password is not strong enough')
+        throw Error('Mot de passe pas assez fort 🔓')
     }
 
     const exists = await this.findOne({email})
     if(exists){
-        throw Error('User already exists')
+        throw Error('Utilisateur existe déja 👩🏽‍💻')
     }
 
     const salt = await bcrypt.genSalt(10)
@@ -62,17 +62,17 @@ userSchema.statics.signup = async function (email, password ,name, surname) {
 userSchema.statics.login = async function (email, password) {
     //validation
     if(!email || !password){
-        throw Error('All fields must be filled')
+        throw Error('Veuillez remplir tout les champs avant de continuer ❗️')
     }
 
     const user = await this.findOne({email})
     if(!user){
-        throw Error('incorrect email')
+        throw Error('Email incorrect ❌')
     }
 
     const match = await bcrypt.compare(password, user.password); 
     if(!match){
-        throw Error('incorrect password')
+        throw Error('Mot de passe incorrect ❌')
     }
 
     return user

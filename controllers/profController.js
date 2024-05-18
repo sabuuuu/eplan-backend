@@ -202,20 +202,26 @@ export const getDisponibilities = async (req, res) => {
     }
 };
 
-//supprimer une disponibilité
 export const deleteDisponibility = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    // Find the disponibility by ID and delete it
-    await Prof.findOneAndUpdate(
-      { _id: req.user._id },
-      { $pull: { dispo: { _id: id } } }
-    );
-
-    res.status(200).json({ message: 'Disponibility deleted successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-};
+    try {
+      const { profId , disponibilityId } = req.params;
+      console.log(req.params);
+  
+      // Find the professor document and update the dispo array
+      const updatedProf = await Prof.findOneAndUpdate(
+        { _id: profId },
+        { $pull: { dispo: { _id: disponibilityId } } },
+        { new: true }
+      );
+  
+      if (!updatedProf) {
+        return res.status(404).json({ message: 'Disponibility not found' });
+      }
+  
+      res.status(200).json({ message: 'Disponibility deleted successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };
+  

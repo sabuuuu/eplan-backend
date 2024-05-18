@@ -9,10 +9,12 @@ export const requireAuth = async(req, res, next) => {
 
         // Check if the request is for the loginProf route
         if (req.path === '/loginprof') {
-            // Skip authentication for loginProf route
             return next();
         }
 
+        if (req.path === '/filtre') {
+            return next();
+        }
     if(!authorization){
         return res.status(401).json({error: 'Authorization required'})
     }

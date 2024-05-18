@@ -7,7 +7,7 @@ const router = express.Router();
 router.use(requireAuth);
 
 //route pour ajouter une Salle
-const addSalle = async (req, res) => {  
+export const addSalle = async (req, res) => {  
     try {
         if (!req.body.num || !req.body.type || !req.body.capacite ){
             return res.status(400).json({message: "Numéro et type sont obligatoires"});
@@ -29,7 +29,7 @@ const addSalle = async (req, res) => {
 };
 
 //route pour modifier une Salle
-const updateSalle = async (req, res) => {
+export const updateSalle = async (req, res) => {
     try {
         if (!req.body.num || !req.body.type) {
             return res.status(400).json({message: "Numéro et type sont obligatoires"});
@@ -54,7 +54,7 @@ const updateSalle = async (req, res) => {
 }
 
 //route pour supprimer une Salle    
-const deleteSalle = async (req, res) => {
+export const deleteSalle = async (req, res) => {
     try {
         const {id} = req.params;
         const salle = await Salle.findByIdAndDelete(id);
@@ -69,9 +69,9 @@ const deleteSalle = async (req, res) => {
 }
 
 //route to get all Salles
-const getAllSalles = async (req, res) => {
+export const getAllSalles = async (req, res) => {
     try {
-        const salles = await Salle.find();
+        const salles = await Salle.find({});
         return res.status(200).json({
             count : salles.length,
             data : salles
@@ -81,6 +81,3 @@ const getAllSalles = async (req, res) => {
         res.status(500).json({error: error.message});
     }
 }
-
-
-export {addSalle, updateSalle, deleteSalle, getAllSalles}

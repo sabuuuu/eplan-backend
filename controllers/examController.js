@@ -15,6 +15,7 @@ export const addExam = async(req, res) => {
             return res.status(400).json({message: "Veillez remplir tous les champs"})
         }
         const newExam = {
+            _id: req.body._id,
             name: req.body.name,
             date: req.body.date,
             time: req.body.time,

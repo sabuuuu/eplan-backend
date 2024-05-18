@@ -20,7 +20,7 @@ const profSchema = new mongoose.Schema({
     },
     grade : {
         type : String,
-        required : false
+        required : true
     },
     dispo: [{
         jour: String,  
@@ -37,11 +37,11 @@ const profSchema = new mongoose.Schema({
 profSchema.statics.login = async function (matricule, birthdate) {
     //validation
     if(!matricule || !birthdate){
-        throw Error('All fields must be filled')
+        throw Error('Veuillez remplir tout les champs avant de continuer ❗️')
     }
     const prof = await this.findOne({matricule, birthdate});
     if(!prof){
-        throw Error('Incorrect matricule or birthdate')
+        throw Error('Matricule ou Date de naissance incorrecte ❌')
     }
     return prof;
 }
