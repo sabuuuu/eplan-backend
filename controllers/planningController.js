@@ -38,12 +38,13 @@ export const addPlanning = async (req, res) => {
 //route modifier un planning
 export const updatePlanning = async (req, res) => {
     try {
-        if (!req.body.exams ||!req.body.faculte || !req.body.departement || !req.body.filiere || !req.body.annee || !req.body.semestre || !req.body.type) {
+        if (!req.body.exams || !req.body.date || !req.body.faculte || !req.body.departement || !req.body.filiere || !req.body.annee || !req.body.semestre || !req.body.type) {
             return res.status(400).json({ message: "Veillez remplir tous les champs" });
         }
         const { id } = req.params;
         const updatedFields = {
             exams: req.body.exams,
+            date: req.body.date,
             faculte: req.body.faculte,
             departement: req.body.departement,
             filiere: req.body.filiere,
@@ -78,22 +79,9 @@ export const deletePlanning = async (req, res) => {
 }
 
 //route afficher tous les plannings
-export const getALLPlannings = async (req, res) => {
+export const getPlannings = async (req, res) => {
     try {
-        const plannings = await Planning.find({});
-        console.log(plannings);
-        return res.status(200).json({ data: plannings ,count : plannings.length});
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: error.message });
-    }
-}
-
-//route afficher un planning
-export const getPlanningById= async (req, res) => {
-    try {
-        const { id } = req.params;
-        const planning = await Planning.findById(id).populate({
+        const plannings = await Planning.find().populate({
             path: 'exams',
             populate: {
                 path: 'prof',
@@ -104,6 +92,18 @@ export const getPlanningById= async (req, res) => {
                 select: 'num type batiment',
             },
         });
+        return res.status(200).json({ data: plannings });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
+}
+
+//route afficher un planning
+export const getPlanning = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const planning = await Planning.findById(id);
         if (!planning) {
             return res.status(404).json({ message: "Planning non trouvé" });
         }
