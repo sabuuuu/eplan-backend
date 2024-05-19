@@ -1,4 +1,4 @@
-import express  from 'express';
+import express from 'express';
 import {
     addPlanning,
     updatePlanning,
@@ -13,12 +13,17 @@ import { requireAuth } from '../middleware/requireAuth.js';
 const router = express.Router();
 router.use(requireAuth);
 
-
 //route pour ajouter un planning
 router.post('/', addPlanning);
 
 //route to get all plannings
 router.get('/all', getAllPlannings);
+
+//route pour generer un planning
+router.post('/generate', generateSchedule);
+
+//route pour filtrer les plannings
+router.get('/filtre', getPlanningFiltre);
 
 //route pour modifier un planning
 router.put('/:id', updatePlanning);
@@ -29,11 +34,4 @@ router.delete('/:id', deletePlanning);
 //route pour afficher un planning
 router.get('/:id', getPlanning);
 
-//route pour generer un planning
-router.post('/generate', generateSchedule);
-
-//route pour filtrer les plannings
-router.get('/filtre', getPlanningFiltre);
-
-
-export default router
+export default router;
