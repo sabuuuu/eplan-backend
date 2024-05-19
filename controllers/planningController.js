@@ -79,7 +79,7 @@ export const deletePlanning = async (req, res) => {
 }
 
 //route afficher tous les plannings
-export const getPlannings = async (req, res) => {
+export const getAllPlannings = async (req, res) => {
     try {
         const plannings = await Planning.find().populate({
             path: 'exams',
@@ -102,15 +102,15 @@ export const getPlannings = async (req, res) => {
 //route afficher un planning
 export const getPlanning = async (req, res) => {
     try {
-        const { id } = req.params;
-        const planning = await Planning.findById(id);
-        if (!planning) {
-            return res.status(404).json({ message: "Planning non trouvé" });
+        const {id} = req.params;
+        const plan = await Planning.findById(id);
+        if (!plan) {
+            return res.status(404).json({message: "Planning non trouvée"});
         }
-        return res.status(200).json({ data: planning });
+        return res.status(200).json(plan);
     } catch (error) {
         console.log(error);
-        res.status(500).json({ error: error.message });
+        res.status(500).json({error: error.message});
     }
 }
 
