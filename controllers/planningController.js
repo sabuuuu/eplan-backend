@@ -78,20 +78,11 @@ export const deletePlanning = async (req, res) => {
 }
 
 //route afficher tous les plannings
-export const getPlannings = async (req, res) => {
+export const getALLPlannings = async (req, res) => {
     try {
-        const plannings = await Planning.find().populate({
-            path: 'exams',
-            populate: {
-                path: 'prof',
-                select: 'name',
-            },
-            populate: {
-                path: 'salle',
-                select: 'num type batiment',
-            },
-        });
-        return res.status(200).json({ data: plannings });
+        const plannings = await Planning.find({});
+        console.log(plannings);
+        return res.status(200).json({ data: plannings ,count : plannings.length});
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: error.message });
@@ -99,7 +90,7 @@ export const getPlannings = async (req, res) => {
 }
 
 //route afficher un planning
-export const getPlanning = async (req, res) => {
+export const getPlanningById= async (req, res) => {
     try {
         const { id } = req.params;
         const planning = await Planning.findById(id).populate({

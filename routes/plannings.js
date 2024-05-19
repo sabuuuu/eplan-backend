@@ -4,9 +4,9 @@ import {
     updatePlanning,
     deletePlanning,
     getPlanningFiltre,
-    getPlannings,
+    getALLPlannings,
     generateSchedule,
-    getPlanning
+    getPlanningById
 } from '../controllers/planningController.js';
 import { requireAuth } from '../middleware/requireAuth.js';
 
@@ -24,10 +24,10 @@ router.put('/:id', updatePlanning);
 router.delete('/:id', deletePlanning);
 
 //route pour afficher un planning
-router.get('/:id', getPlanning);
+router.get('/:id', getPlanningById);
 
 //route to get all plannings
-router.get('/all', getPlannings);
+router.get('/all', getALLPlannings);
 
 //route pour generer un planning
 router.post('/generate', generateSchedule);
