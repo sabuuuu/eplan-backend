@@ -49,7 +49,7 @@ export const updateExam = async (req, res) => {
         if (!exam) {
             return res.status(404).json({message: "Examen non trouvé"});
         }
-        return res.status(200).send(exam);
+        return res.status(200).json({message: "Examen mis à jour"});
     } catch (error) {
         console.log(error);
         res.status(500).json({error: error.message});
@@ -64,7 +64,7 @@ export const deleteExam = async (req, res) => {
         if (!exam) {
             return res.status(404).json({message: "Examen non trouvé"});
         }
-        return res.status(200).send(exam);
+        return res.status(200).json({message: "Examen supprimé"});
     } catch (error) {
         console.log(error);
         res.status(500).json({error: error.message});

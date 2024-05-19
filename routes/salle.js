@@ -3,7 +3,8 @@ import {
     addSalle, 
     updateSalle, 
     deleteSalle, 
-    getAllSalles
+    getAllSalles,
+    getSalle
 } from '../controllers/salleController.js';
 import { requireAuth } from '../middleware/requireAuth.js';
 
@@ -22,6 +23,9 @@ router.delete('/:id', deleteSalle);
 
 //route to get all Salles
 router.get('/all', getAllSalles);
+
+//route pour afficher une Salle
+router.get('/:id', getSalle);
 
 
 export default router

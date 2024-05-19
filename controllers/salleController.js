@@ -81,3 +81,19 @@ export const getAllSalles = async (req, res) => {
         res.status(500).json({error: error.message});
     }
 }
+
+//route to get one Salle
+export const getSalle = async (req, res) => {
+    try {
+        const {id} = req.params;
+        const salle = await Salle.findById(id);
+        console.log(salle);
+        if (!salle) {
+            return res.status(404).json({message: "Salle non trouvée"});
+        }
+        return res.status(200).json(salle);
+    }catch (error) {
+        console.log(error);
+        res.status(500).json({error: error.message});
+    }
+}

@@ -87,9 +87,10 @@ export const getProf = async (req, res) => {
     try {
         const {id} = req.params;
         const prof = await Prof.findById(id);
-        return res.status(200).json({
-            data: prof
-        });
+        if (!prof) {
+            return res.status(404).json({message: "Enseignant non trouvée"});
+        }
+        return res.status(200).json(prof);
     } catch (error) {
         console.log(error);
         res.status(500).json({error: error.message});
