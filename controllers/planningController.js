@@ -38,19 +38,18 @@ export const addPlanning = async (req, res) => {
 //route modifier un planning
 export const updatePlanning = async (req, res) => {
     try {
-        if (!req.body.exams || !req.body.date || !req.body.faculte || !req.body.departement || !req.body.filiere || !req.body.annee || !req.body.semestre || !req.body.type) {
+        if (!req.body.exams || !req.body.faculte || !req.body.departement || !req.body.filiere || !req.body.annee || !req.body.semestre || !req.body.type) {
             return res.status(400).json({ message: "Veillez remplir tous les champs" });
         }
         const { id } = req.params;
-        const updatedFields = {
+        updatedFields = {
             exams: req.body.exams,
-            date: req.body.date,
             faculte: req.body.faculte,
             departement: req.body.departement,
             filiere: req.body.filiere,
             annee: req.body.annee,
             semestre: req.body.semestre,
-            type: req.body.type
+            type: req.body.type,
         }
         const planning = await Planning.findByIdAndUpdate(id, updatedFields);
         if (!planning) {
@@ -113,7 +112,7 @@ export const getPlanning = async (req, res) => {
                 path: 'salle',
                 select: 'num type batiment',
             },
-        });
+        });;
         if (!plan) {
             return res.status(404).json({message: "Planning non trouvée"});
         }
