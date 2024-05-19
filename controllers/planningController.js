@@ -103,7 +103,17 @@ export const getAllPlannings = async (req, res) => {
 export const getPlanning = async (req, res) => {
     try {
         const {id} = req.params;
-        const plan = await Planning.findById(id);
+        const plan = await Planning.findById(id).populate({
+            path: 'exams',
+            populate: {
+                path: 'prof',
+                select: 'name',
+            },
+            populate: {
+                path: 'salle',
+                select: 'num type batiment',
+            },
+        });
         if (!plan) {
             return res.status(404).json({message: "Planning non trouvée"});
         }
