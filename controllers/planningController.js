@@ -42,7 +42,7 @@ export const updatePlanning = async (req, res) => {
             return res.status(400).json({ message: "Veillez remplir tous les champs" });
         }
         const { id } = req.params;
-        updatedFields = {
+        const updatedFields = {
             exams: req.body.exams,
             faculte: req.body.faculte,
             departement: req.body.departement,
@@ -51,6 +51,7 @@ export const updatePlanning = async (req, res) => {
             semestre: req.body.semestre,
             type: req.body.type,
         }
+        console.log(updatedFields);
         const planning = await Planning.findByIdAndUpdate(id, updatedFields);
         if (!planning) {
             return res.status(404).json({ message: "Planning non trouvé" });
@@ -276,17 +277,22 @@ export const getPlanningFiltre = async (req, res) => {
         if (semestre) query.semestre = semestre;
         if (type) query.type = type;
     
-        const schedule = await Planning.find(query).populate({
-            path: 'exams',
-            populate: {
-                path: 'prof',
-                select: 'name',
+        const schedule = await Planning.find(query).populate([
+            {
+                path: 'exams',
+                populate: {
+                    path: 'profs',  
+                    select: 'name',
+                },
             },
-            populate: {
-                path: 'salle',
-                select: 'num type batiment',
+            {
+                path: 'exams',
+                populate: {
+                    path: 'salle',
+                    select: 'num type batiment',
+                },
             },
-        })
+        ]);
         res.status(200).json(schedule);
       } catch (error) {
         console.error(error);
